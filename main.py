@@ -1,11 +1,8 @@
-# import speech_recognition as sr
 import webbrowser
 import pyttsx3
 import time
 import musicLibrary
 import datetime
-
-# recognizer = sr.Recognizer()
 
 def speak(text):
     engine = pyttsx3.init("sapi5")
@@ -28,9 +25,6 @@ qa = {
     ("what can you do", "what are your features", "how can you help me"): 
         "I can open websites, play music, tell time, search the web, and respond to basic questions."
 }
-
-# def reply(text):
-#     return text
 
 def smart_reply(c):
     # generic conversational responses
@@ -107,39 +101,3 @@ def processCommand(c):
         return smart_reply(c)
     
     return "Okay"
-
-
-
-# Logic file should NEVER run loops when used with GUI.
-
-# if __name__ == "__main__":
-#     speak("Initializing Nova...")
-
-#     # with sr.Microphone() as source:
-#     #     recognizer.adjust_for_ambient_noise(source, duration=1)
-
-#     while True:
-#         try:
-#             with sr.Microphone() as source:
-#                 print("Recognizing voice...")
-#                 # timeout=5 → waits max 5 seconds for speech, phrase_time_limit=5 → listens max 5 seconds
-#                 audio = recognizer.listen(source,timeout=5, phrase_time_limit=5)
-                
-#             word = recognizer.recognize_google(audio)
-
-#             if "nova" in word.lower():
-#                 speak("Yes! How can I help you?")
-
-#                 # Listen for command
-#                 with sr.Microphone() as source:
-#                     print("Listening for the command...")
-#                     audio = recognizer.listen(source,timeout=5, phrase_time_limit=5)
-
-#                 command = recognizer.recognize_google(audio)
-#                 print("Command:", command)
-#                 processCommand(command)
-
-#         except sr.RequestError as e:
-#             print(f"API error: {e}")
-#         except Exception as e:
-#             print(f"Unexpected error: {e}")
