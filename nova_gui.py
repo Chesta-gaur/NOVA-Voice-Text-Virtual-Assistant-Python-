@@ -1,7 +1,7 @@
 import tkinter as tk
 import threading
 import speech_recognition as sr
-from main import processCommand, speak  # reuse your logic
+from main import processCommand, speak  
 
 recognizer = sr.Recognizer()
 
@@ -28,19 +28,18 @@ DARK_THEME = {
     "status_fg": "#1E941C"
 }
 
-
 current_theme = "dark"
 
 # -------- Voice Listening Function --------
 def listen():
-    status_label.config(text="Listening...")  # Updates the GUI status text
+    status_label.config(text="Listening...")  
 
     try:
         with sr.Microphone() as source:
             audio = recognizer.listen(source, timeout=5, phrase_time_limit=5)
 
         command = recognizer.recognize_google(audio)
-        chat_box.insert(tk.END, f"You: {command}\n")  # Displays what the user said in the chat box
+        chat_box.insert(tk.END, f"You: {command}\n")  
         chat_box.see(tk.END)
 
         response = processCommand(command)
@@ -63,13 +62,12 @@ def listen():
 
 
 # -------- Text Input Handler --------
-# Triggered when user clicks Send or presses Enter
 def handle_text_command():
-    command = text_entry.get()  # Reads text from input box
+    command = text_entry.get()  
 
     if command.strip():
         chat_box.insert(tk.END, f"USER: {command}\n")
-        chat_box.see(tk.END)  # Auto-scrolls chat to bottom
+        chat_box.see(tk.END)
 
         response = processCommand(command)
 
@@ -83,11 +81,10 @@ def handle_text_command():
             chat_box.see(tk.END)
             speak(response)
 
-        text_entry.delete(0, tk.END)  # Clears input box after sending
+        text_entry.delete(0, tk.END) 
         
 
 # -------- Thread Wrapper --------
-# This function is called when user clicks Start Listening
 def start_listening(): 
     threading.Thread(target=listen).start()
 
@@ -134,16 +131,16 @@ def apply_theme(theme):
     status_label.config(bg=theme["bg"], fg=theme["status_fg"])
 
 
-# Creates the main application window. This is the parent container for everything
+# Creates the main application window
 root = tk.Tk()
 
 
 # -------- GUI Setup --------
-root.title("NOVA - Virtual Assistant")  # Appears on the top left bar of the app
-root.update_idletasks()  # Forces Tkinter to calculate screen dimensions. Needed before centering the window
-x = (root.winfo_screenwidth() // 2) - (1100 // 2)  # Calculates center position for the window
+root.title("NOVA - Virtual Assistant")  
+root.update_idletasks()  
+x = (root.winfo_screenwidth() // 2) - (1100 // 2)  
 y = (root.winfo_screenheight() // 2) - (700 // 2) - 30
-root.geometry(f"1100x700+{x}+{y}")  # Geometry controls size + position
+root.geometry(f"1100x700+{x}+{y}") 
 root.config(bg="#000000") 
 
 # Header
@@ -154,7 +151,7 @@ header = tk.Label(
     fg="#ffffff",
     bg="#000000"
 )
-header.pack(pady=(15, 5))  # .pack() is mandatory to make widgets visible
+header.pack(pady=(15, 5))  
 
 sub_header = tk.Label(
     root,
@@ -173,13 +170,13 @@ chat_box = tk.Text(
     font=("Consolas", 11),
     bg="#FFFFFF",
     fg="#2C2C54",
-    wrap=tk.WORD,  # prevents word cutting
+    wrap=tk.WORD,  
     bd=0,
-    padx=20,  # inner spacing
+    padx=20,  
     pady=20
 )
 chat_box.pack(padx=10, pady=10)
-chat_box.config(state=tk.NORMAL)  # Allows text insertion. Required before writing into Text widget
+chat_box.config(state=tk.NORMAL) 
 chat_box.insert(tk.END, "NOVA: Hello! Click 'Start Listening' to begin.\n")
 
 # Text like chat gpt(input area)
@@ -226,7 +223,7 @@ listen_btn.pack(side=tk.LEFT, padx=5)
 exit_btn = tk.Button(
     btn_frame,
     text="Exit",
-    command=root.destroy,  # Closes the app window. Ends Tkinter loop
+    command=root.destroy,  
     bg="#d51414",
     fg="white",
     font=("Segoe UI", 12, "bold"),
@@ -251,8 +248,8 @@ status_label = tk.Label(root, text="Idle", fg="green")
 status_label.pack()
 
 speak("Initializing Nova...")
-
 apply_theme(DARK_THEME)
 
 # main loop
 root.mainloop()
+
